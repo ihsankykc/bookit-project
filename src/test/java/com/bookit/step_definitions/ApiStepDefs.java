@@ -18,9 +18,9 @@ import static io.restassured.RestAssured.given;
 
 public class ApiStepDefs {
 
-    String token;
-    Response response;
-    String emailGlobal;
+    static String token;
+    static Response response;
+    static String emailGlobal;
     @Given("I logged Bookit api using {string} and {string}")
     public void i_logged_Bookit_api_using_and(String email, String password) {
 
@@ -32,7 +32,7 @@ public class ApiStepDefs {
     @When("I get the current user information from api")
     public void i_get_the_current_user_information_from_api() {
         //send get request to retrieve current user information
-        String url = ConfigurationReader.get("qa2api.uri")+"/api/users/me";
+        String url = ConfigurationReader.get("qa3api.uri")+"/api/users/me";
 
        response=     given().accept(ContentType.JSON)
                                      .and()
