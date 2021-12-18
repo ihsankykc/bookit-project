@@ -33,7 +33,7 @@ public class HWStepDef {
     @And("I get the current user information from UI")
     public void iGetTheCurrentUserInformationFromUI() {
         SelfPage selfPage = new SelfPage();
-        BrowserUtils.waitFor(3);
+        BrowserUtils.waitFor(5);
         actualUIFullName = selfPage.name.getText();
         actualUIRole = selfPage.role.getText();
         actualUITeam = selfPage.team.getText();
