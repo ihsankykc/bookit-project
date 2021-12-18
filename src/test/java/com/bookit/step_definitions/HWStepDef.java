@@ -7,22 +7,38 @@ import com.bookit.utilities.DBUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.restassured.path.json.JsonPath;
+import org.junit.Assert;
 
 import java.util.Map;
 
 public class HWStepDef {
 
+    String actualUIFullName ;
+    String actualUIRole ;
+    String actualUITeam ;
+    String actualUIBatch ;
+    String actualUICampus ;
+    String nameFromDB ;
+    String roleFromDB ;
+    String batchFromDB ;
+    String teamNameFromDB ;
+    String locationFromDB ;
+    String nameFromAPI ;
+    String roleFromAPI ;
+    String teamFromAPI ;
+    String batchFromAPI ;
+    String campusFromAPI ;
 
 
     @And("I get the current user information from UI")
     public void iGetTheCurrentUserInformationFromUI() {
         SelfPage selfPage = new SelfPage();
         BrowserUtils.waitFor(3);
-        String actualUIFullName = selfPage.name.getText();
-        String actualUIRole = selfPage.role.getText();
-        String actualUITeam = selfPage.team.getText();
-        String actualUIBatch = selfPage.batch.getText();
-        String actualUICampus = selfPage.campus.getText();
+        actualUIFullName = selfPage.name.getText();
+        actualUIRole = selfPage.role.getText();
+        actualUITeam = selfPage.team.getText();
+        actualUIBatch = selfPage.batch.getText();
+        actualUICampus = selfPage.campus.getText();
 
         System.out.println("actualUICampus = " + actualUICampus);
         System.out.println("actualUIBatch = " + actualUIBatch);
@@ -39,11 +55,11 @@ public class HWStepDef {
                 "on u.team_id = j.id where email='"+ApiStepDefs.emailGlobal+"';";
 
         Map<String,Object> dataMap = DBUtils.getRowMap(query);
-        String nameFromDB = dataMap.get("firstname")+" "+dataMap.get("lastname");
-        String roleFromDB = (String) dataMap.get("role");
-        String batchFromDB = "#"+dataMap.get("batch_number");
-        String teamNameFromDB = (String) dataMap.get("name");
-        String locationFromDB = (String) dataMap.get("location");
+        nameFromDB = dataMap.get("firstname")+" "+dataMap.get("lastname");
+        roleFromDB = (String) dataMap.get("role");
+        batchFromDB = "#"+dataMap.get("batch_number");
+        teamNameFromDB = (String) dataMap.get("name");
+        locationFromDB = (String) dataMap.get("location");
         System.out.println("dataMap = " + dataMap);
 
 
@@ -56,14 +72,14 @@ public class HWStepDef {
     public void iGetMoreInformationAboutUserFromAPI() {
 
         JsonPath jsonPath = ApiStepDefs.response.jsonPath();
-        String nameFromAPI = jsonPath.getString("firstName")+" "+jsonPath.getString("lastName");
-        String roleFromAPI = jsonPath.getString("role");
+        nameFromAPI = jsonPath.getString("firstName")+" "+jsonPath.getString("lastName");
+        roleFromAPI = jsonPath.getString("role");
 
         String[] restOfTheAPIinfo = BookItApiUtils.getMyInfo(ApiStepDefs.emailGlobal,ApiStepDefs.passwordGlobal);
 
-        String teamFromAPI = restOfTheAPIinfo[0];
-        String batchFromAPI = restOfTheAPIinfo[1];
-        String campusFromAPI = restOfTheAPIinfo[2];
+        teamFromAPI = restOfTheAPIinfo[0];
+        batchFromAPI = restOfTheAPIinfo[1];
+        campusFromAPI = restOfTheAPIinfo[2];
 
         System.out.println("batchFromAPI = " + batchFromAPI);
     }
@@ -71,6 +87,12 @@ public class HWStepDef {
 
     @Then("All five information from three environment should match")
     public void all_five_information_from_three_environment_should_match() {
+
+        Assert.assertTrue(actualUIFullName.equals(nameFromDB)&&actualUIFullName.equals(nameFromAPI));
+        Assert.assertTrue(actualUICampus.equals(locationFromDB)&&actualUICampus.equals(campusFromAPI));
+        Assert.assertTrue(actualUIBatch.equals(batchFromDB)&&actualUIBatch.equals(batchFromAPI));
+        Assert.assertTrue(actualUIRole.equals(roleFromDB)&&actualUIRole.equals(roleFromAPI));
+        Assert.assertTrue(actualUITeam.equals(teamNameFromDB)&&actualUITeam.equals(teamFromAPI));
 
 
 
