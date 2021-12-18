@@ -50,17 +50,32 @@ public class HWStepDef {
     }
 
 
+
+
+    @And("I get more information about user from API")
+    public void iGetMoreInformationAboutUserFromAPI() {
+
+        JsonPath jsonPath = ApiStepDefs.response.jsonPath();
+        String nameFromAPI = jsonPath.getString("firstName")+" "+jsonPath.getString("lastName");
+        String roleFromAPI = jsonPath.getString("role");
+
+        String[] restOfTheAPIinfo = BookItApiUtils.getMyInfo(ApiStepDefs.emailGlobal,ApiStepDefs.passwordGlobal);
+
+        String teamFromAPI = restOfTheAPIinfo[0];
+        String batchFromAPI = restOfTheAPIinfo[1];
+        String campusFromAPI = restOfTheAPIinfo[2];
+
+        System.out.println("batchFromAPI = " + batchFromAPI);
+    }
+
+
     @Then("All five information from three environment should match")
     public void all_five_information_from_three_environment_should_match() {
 
-       JsonPath jsonPath = ApiStepDefs.response.jsonPath();
-       String nameFromAPI = jsonPath.getString("firstName")+" "+jsonPath.getString("lastName");
-       String roleFromAPI = jsonPath.getString("role");
 
 
 
-  }
-
+    }
 
 
 }
