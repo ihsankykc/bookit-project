@@ -3,16 +3,16 @@ Feature: User Verification
 
 
   Scenario: verify information about logged user
-    Given I logged Bookit api using "sbirdbj@fc2.com" and "asenorval"
+    Given I logged Bookit api using "ccornil1h@usnews.com" and "corniecornil"
     When I get the current user information from api
     Then status code should be 200
 
   @db
   Scenario: verify information about logged user from api and database
-    Given I logged Bookit api using "sbirdbj@fc2.com" and "asenorval"
+    Given I logged Bookit api using "ccornil1h@usnews.com" and "corniecornil"
     When I get the current user information from api
     Then the information about current user from api and database should match
-
+  @wip
    @db
   Scenario: three point verification(UI,DATABASE,API)
     Given user logs in using "sbirdbj@fc2.com" "asenorval"
@@ -20,6 +20,7 @@ Feature: User Verification
     And I logged Bookit api using "sbirdbj@fc2.com" and "asenorval"
     And I get the current user information from api
     Then UI,API and Database user information must be match
+
 
   @wip @db
   Scenario Outline:  three point verification(UI,DATABASE,API) DDF
@@ -34,5 +35,5 @@ Feature: User Verification
       | sbirdbj@fc2.com      | asenorval    |
       | ccornil1h@usnews.com | corniecornil |
 
-    #get name,role,team,batch,campus information from ui,database and api, compare them
-    #you might get in one shot from ui and database, but might need multiple api requests to get those information
+#    get name,role,team,batch,campus information from ui,database and api, compare them
+#    you might get in one shot from ui and database, but might need multiple api requests to get those information

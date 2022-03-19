@@ -34,7 +34,7 @@ public class ApiStepDefs {
     @When("I get the current user information from api")
     public void i_get_the_current_user_information_from_api() {
         //send get request to retrieve current user information
-        String url = ConfigurationReader.get("qa3api.uri")+"/api/users/me";
+        String url = ConfigurationReader.get("qa2api.uri")+"/api/users/me";
 
        response=     given().accept(ContentType.JSON)
                                      .and()
